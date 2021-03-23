@@ -47,6 +47,16 @@ public class ClientController implements Initializable{
 			}
 		});
 		
+		message.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				sendButtonCAction(event);
+			}
+			
+		});
+		
 	}
 	
 	//클라이언트의 접속버튼을 눌렀을때 실행되는 메소드
@@ -56,7 +66,7 @@ public class ClientController implements Initializable{
 		
 		startClient(ip, port);
 		
-		connectButton.setDisable(true);
+		 connectButton.setDisable(true);
 	}
 	
 	

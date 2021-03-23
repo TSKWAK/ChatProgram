@@ -1,4 +1,3 @@
-//fxcontroller="application.ServerController"
 package server;
 
 import javafx.application.Application;
@@ -12,7 +11,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception{
 
-			
 			Parent root = FXMLLoader.load(getClass().getResource("server.fxml"));
 			Scene scene = new Scene(root);
 			

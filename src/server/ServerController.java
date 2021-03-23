@@ -56,6 +56,15 @@ public class ServerController implements Initializable{
 			}
 		});
 
+		message.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				sendButtonSAction(event);
+			}
+			
+		});
 		
 	}
 	
