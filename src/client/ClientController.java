@@ -1,5 +1,7 @@
 package client;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -24,6 +26,7 @@ public class ClientController implements Initializable{
 	@FXML public TextField ipAddress;
 	@FXML public TextArea chatArea;
 	@FXML public TextField message;
+	@FXML public Button exportButton;
 	
 	Socket socket;
 	
@@ -53,6 +56,29 @@ public class ClientController implements Initializable{
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				sendButtonCAction(event);
+			}
+			
+		});
+		
+		exportButton.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				File file = new File("C:/logTemp/Export.txt");
+				
+				try {
+				FileWriter fw = new FileWriter(file, true);
+				fw.write(chatArea.getText());
+				send("추출완료");
+				
+				fw.flush();
+				fw.close();
+				
+				}catch(Exception e) {
+					e.printStackTrace();
+					send(e.getMessage());
+				}
+				
 			}
 			
 		});
@@ -134,6 +160,7 @@ public class ClientController implements Initializable{
 				}catch(Exception e) {
 					stopClient();
 				}
+				
 			}
 		};
 		thread.start();

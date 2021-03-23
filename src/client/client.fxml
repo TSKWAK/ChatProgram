@@ -20,9 +20,10 @@
                   <TextField fx:id="nickName" layoutX="11.0" layoutY="21.0" prefHeight="22.0" prefWidth="122.0" text="홍길동" />
                   <Label layoutX="14.0" layoutY="4.0" text="닉네임" />
                   <Label layoutX="157.0" layoutY="3.0" text="Port" />
-                  <Button fx:id="connectButton" layoutX="238.0" layoutY="34.0" mnemonicParsing="false" text="접속" />
+                  <Button fx:id="connectButton" layoutX="240.0" layoutY="21.0" mnemonicParsing="false" text="접속" />
                   <TextField fx:id="ipAddress" layoutX="66.0" layoutY="49.0" text="192.168.1.8" />
                   <Label layoutX="18.0" layoutY="53.0" text="IP주소" />
+                  <Button fx:id="exportButton" layoutX="240.0" layoutY="50.0" mnemonicParsing="false" text="추출" />
                </children>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
