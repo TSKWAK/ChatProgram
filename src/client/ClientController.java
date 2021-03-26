@@ -33,7 +33,7 @@ public class ClientController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		sendButtonC.setOnAction(new EventHandler<ActionEvent>() {
-
+			
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
@@ -63,7 +63,7 @@ public class ClientController implements Initializable{
 		exportButton.setOnAction(new EventHandler<ActionEvent>(){
 
 			@Override
-			public void handle(ActionEvent arg0) {
+			public void handle(ActionEvent event) {
 				File file = new File("C:/logTemp/Export.txt");
 				
 				try {
