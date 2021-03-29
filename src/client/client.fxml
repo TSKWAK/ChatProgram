@@ -29,10 +29,10 @@
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="808.0" prefWidth="468.0">
                <children>
                   <TextArea layoutX="14.0" layoutY="14.0" prefHeight="38.0" prefWidth="392.0" />
-                  <TextField fx:id="FileAddress" layoutX="24.0" layoutY="20.0" prefHeight="23.0" prefWidth="373.0" text="업로드할 파일 경로를 입력하세요." />
+                  <TextField fx:id="FileAddress" layoutX="24.0" layoutY="20.0" onMouseClicked="#upLoadClick" prefHeight="23.0" prefWidth="373.0" text="업로드할 파일 경로를 입력하세요." />
                   <Button fx:id="Uploadbut" layoutX="418.0" layoutY="14.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="84.0" text="Upload" />
                   <TextArea layoutX="14.0" layoutY="461.0" prefHeight="38.0" prefWidth="392.0" />
-                  <TextField fx:id="TargetFileAddress" layoutX="24.0" layoutY="469.0" prefHeight="23.0" prefWidth="373.0" text="다운로드할 파일 경로를 입력하세요." />
+                  <TextField fx:id="TargetFileAddress" layoutX="24.0" layoutY="469.0" onMouseClicked="#downLoadClick" prefHeight="23.0" prefWidth="373.0" text="다운로드할 파일 경로를 입력하세요." />
                   <Button fx:id="Downloadbut" layoutX="418.0" layoutY="461.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="84.0" text="Download" />
                </children>
             </AnchorPane>

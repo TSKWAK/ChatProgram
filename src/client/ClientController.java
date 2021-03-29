@@ -36,6 +36,17 @@ public class ClientController implements Initializable{
 	@FXML public Button Downloadbut;
 	@FXML public TextField FileAddress;
 	@FXML public TextField TargetFileAddress;
+	
+	//은혜 덧붙임
+	@FXML
+	public void upLoadClick(MouseEvent event) {		
+		FileAddress.setText("");
+	}
+	
+	@FXML
+	public void downLoadClick(MouseEvent event) {
+		TargetFileAddress.setText("");
+	}
 
 	
 	Socket socket;
@@ -200,18 +211,6 @@ public class ClientController implements Initializable{
 		send(nickName.getText() + ": " + message.getText()+ "\n");
 		message.setText("");
 	}
-	
-	
-	//은혜 덧붙임
-		@FXML
-		public void upLoadClick(MouseEvent event) {		
-			FileAddress.setText("");
-		}
-		
-		@FXML
-		public void downLoadClick(MouseEvent event) {
-			TargetFileAddress.setText("");
-		}
 		
 		public void Upload() {
 
