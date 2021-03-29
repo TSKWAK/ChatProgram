@@ -2,31 +2,37 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane fx:controller="server.ServerController" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerController">
    <children>
       <SplitPane dividerPositions="0.35714285714285715" prefHeight="800.0" prefWidth="800.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="282.0">
                <children>
                   <TextField fx:id="message" layoutX="8.0" layoutY="773.0" prefHeight="22.0" prefWidth="225.0" />
-                  <Button fx:id="sendButtonS" layoutX="238.0" layoutY="773.0" mnemonicParsing="false" text="전송"/>
-                  <TextArea fx:id="chatArea" layoutX="4.0" layoutY="78.0" prefHeight="690.0" prefWidth="274.0"/>
+                  <Button fx:id="sendButtonS" layoutX="238.0" layoutY="773.0" mnemonicParsing="false" text="전송" />
+                  <TextArea fx:id="chatArea" layoutX="4.0" layoutY="78.0" prefHeight="690.0" prefWidth="274.0" />
                   <TextField fx:id="portS" layoutX="155.0" layoutY="35.0" prefHeight="22.0" prefWidth="71.0" text="5000" />
                   <TextField fx:id="ipAddress" layoutX="11.0" layoutY="35.0" prefHeight="22.0" prefWidth="122.0" text="192.168.1.8" />
                   <Label layoutX="14.0" layoutY="14.0" text="IP주소" />
                   <Label layoutX="157.0" layoutY="14.0" text="Port" />
-                  <Button fx:id="startButton" layoutX="238.0" layoutY="35.0" mnemonicParsing="false" text="시작"/>
+                  <Button fx:id="startButton" layoutX="238.0" layoutY="35.0" mnemonicParsing="false" text="시작" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <BorderPane prefHeight="790.0" prefWidth="498.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <Pane prefHeight="798.0" prefWidth="510.0">
+                     <children>
+                        <ListView fx:id="fileList" layoutX="6.0" layoutY="12.0" prefHeight="712.0" prefWidth="498.0" />
+                        <Button fx:id="deleteBotton" layoutX="202.0" layoutY="731.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="102.0" text="삭제" />
+                     </children>
+                  </Pane>
                </children></AnchorPane>
         </items>
       </SplitPane>

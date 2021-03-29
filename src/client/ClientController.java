@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -23,6 +24,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 public class ClientController implements Initializable{
@@ -41,9 +43,11 @@ public class ClientController implements Initializable{
 	@FXML public TextField FileAddress;
 	@FXML public TextField TargetFileAddress;
 	
-	@FXML public ListView fileList;
+	@FXML public ListView<String> fileList;
 	
 	public ObservableList<String> files = FXCollections.observableArrayList();
+	
+	ArrayList<File> farr = new ArrayList<File>();
 	
 	
 	//은혜 덧붙임
@@ -236,13 +240,15 @@ public class ClientController implements Initializable{
 		send(nickName.getText() + ": " + message.getText()+ "\n");
 		message.setText("");
 	}
+	
+	
 		
 		public void UpLoad() {
 			
 			try {
 			String fileAddr = FileAddress.getText();
 			int slash = fileAddr.lastIndexOf("\\");
-			String fileName =fileAddr.substring(slash); 
+			String fileName =fileAddr.substring(slash);
 			File file = new File(fileAddr);
 			String tmpAddr = "C:\\FXProject\\tmpmemory";
 			File tmpmemory= new File(tmpAddr+fileName);
@@ -278,7 +284,7 @@ public class ClientController implements Initializable{
 			
 		}
 		
-		public void DownLoad(){	
+		public void DownLoad(){
 			
 			String arriveFileAddr = TargetFileAddress.getText();
 			File arriveFile = new File(arriveFileAddr); 
