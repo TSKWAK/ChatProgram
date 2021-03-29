@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
 public class ClientController implements Initializable{
 	@FXML public Button sendButtonC;
@@ -39,13 +40,26 @@ public class ClientController implements Initializable{
 	
 	//은혜 덧붙임
 	@FXML
-	public void upLoadClick(MouseEvent event) {		
+	public void upLoadClick(MouseEvent event) {	
+		try {
 		FileAddress.setText("");
+		FileChooser fch = new FileChooser();
+		FileAddress.setText(fch.showOpenDialog(null).getPath());
+		} catch(Exception e) {
+			
+		}
+		
 	}
 	
 	@FXML
 	public void downLoadClick(MouseEvent event) {
+		try {
 		TargetFileAddress.setText("");
+		FileChooser fch = new FileChooser();
+		TargetFileAddress.setText(fch.showSaveDialog(null).getPath());
+		} catch(Exception e) {
+			
+		}
 	}
 
 	
@@ -104,13 +118,13 @@ public class ClientController implements Initializable{
 			
 		});
 	
+		
 		//Upload~Download 은혜
 
-				
 				Uploadbut.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						UploadbutAction(event);
+						UpLoad();
 					}
 					
 				});
@@ -118,7 +132,7 @@ public class ClientController implements Initializable{
 				Downloadbut.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						DownloadbutAction(event);				
+						DownLoad();			
 					}
 					
 				});
@@ -212,8 +226,9 @@ public class ClientController implements Initializable{
 		message.setText("");
 	}
 		
-		public void Upload() {
-
+		public void UpLoad() {
+			
+			try {
 			String fileAddr = FileAddress.getText();
 			int slash = fileAddr.lastIndexOf("\\");
 			String fileName =fileAddr.substring(slash); 
@@ -244,14 +259,17 @@ public class ClientController implements Initializable{
 						e.printStackTrace();
 					}
 				System.out.println("[tmp 복사완료]");
+			} catch(Exception e) {
+				System.out.println("파일경로가 올바르지 않습니다!");
+			}
 			
 		}
 		
-		public void Download(){		
-		
+		public void DownLoad(){	
+			
 			String arriveFileAddr = TargetFileAddress.getText();
 			File arriveFile = new File(arriveFileAddr); 
-			int slash2 = arriveFileAddr.lastIndexOf("\\"); 
+			int slash2 = arriveFileAddr.lastIndexOf("\\");
 			String newAddr = arriveFileAddr.substring(0, slash2);
 			String fileName = arriveFileAddr.substring(slash2);
 			String tmpAddr = "C:\\FXProject\\tmpmemory";
@@ -278,14 +296,5 @@ public class ClientController implements Initializable{
 						e.printStackTrace();
 					}
 				}
-		
-		public void UploadbutAction(ActionEvent event) {
-			Upload();
-		}
-		
-		public void DownloadbutAction(ActionEvent event) {
-			Download();
-		}
-	
 	
 }
