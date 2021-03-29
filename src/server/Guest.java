@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import javafx.application.Platform;
+
 public class Guest {
 	Socket socket;
 	
@@ -57,8 +59,10 @@ public class Guest {
 						// /로 시작하면 파일의 이름
 						if(buffer[0]=='/') {
 							String path = new String(buffer,1,length,"UTF-8");
-							ServerController.files.add(path);
-							ServerController.farr.add(path);
+							Platform.runLater(()->{
+								ServerController.files.add(path);
+								ServerController.farr.add(path);
+							});
 							for(Guest guest : ServerController.guests) {
 								guest.send("/"+path);
 							}
@@ -99,6 +103,7 @@ public class Guest {
 						e2.printStackTrace();
 					}
 				}
+				
 			}
 			
 		};

@@ -216,8 +216,11 @@ public class ClientController implements Initializable{
 				// /로 시작하면 파일의 이름
 				if(buffer[0]=='/') {
 					String path = new String(buffer,1,length,"UTF-8");
-					farr.add(path);
-					files.add(path);
+					Platform.runLater(()->{
+						farr.add(path);
+						files.add(path);
+						fileList.setItems(files);
+					});
 				}
 				
 				// $로 시작하면 파일의 내용
@@ -225,9 +228,14 @@ public class ClientController implements Initializable{
 					String contents = new String(buffer,1,length,"UTF-8");
 					fco.add(contents);
 				}
-				
-				
-				
+				else if(buffer[0]=='|') {
+					Platform.runLater(()->{
+						files.remove(buffer[1]);
+						farr.remove(buffer[1]);
+						fco.remove(buffer[1]);
+						fileList.setItems(files);
+					});
+				}
 				else {
 				String message = new String(buffer, 0, length, "UTF-8");
 				Platform.runLater(()->{
@@ -266,7 +274,7 @@ public class ClientController implements Initializable{
 	
 		
 	public void UpLoad() {
-		String path = "/";
+		String path;
 		String contents = "$";
 		try {
 			FileInputStream fis = new FileInputStream(FileAddress.getText());
@@ -293,8 +301,7 @@ public class ClientController implements Initializable{
 			System.out.println("파일경로가 올바르지 않습니다!");
 		}
 		send(contents);
-		
-			
+		FileAddress.setText("");
 	}
 		
 	public void DownLoad(){

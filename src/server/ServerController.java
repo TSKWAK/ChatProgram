@@ -43,6 +43,8 @@ public class ServerController implements Initializable{
 	
 	@FXML public ListView<String> fileList;
 	
+	@FXML public Button deleteButton;
+	
 	public static ObservableList<String> files = FXCollections.observableArrayList();
 	
 	static ArrayList<String> farr = new ArrayList<String>();
@@ -51,7 +53,7 @@ public class ServerController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources){
 		
-		fileList.setItems(files);
+		rePlace();
 		
 		sendButtonS.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -77,6 +79,16 @@ public class ServerController implements Initializable{
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				sendButtonSAction(event);
+			}
+			
+		});
+		
+		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				deleteFile();
 			}
 			
 		});
@@ -188,6 +200,30 @@ public class ServerController implements Initializable{
 			message.setText("");
 			
 		});
+	}
+	
+	public void deleteFile() {
+		String deleteCode = "|" + fileList.getSelectionModel().getSelectedIndex();
+		for(Guest guest : guests) {
+			guest.send(deleteCode);
+		}
+		files.remove(fileList.getSelectionModel().getSelectedIndex());
+		farr.remove(fileList.getSelectionModel().getSelectedIndex());
+		fco.remove(fileList.getSelectionModel().getSelectedIndex());
+	}
+	
+	public void rePlace() {
+		Runnable thread = new Runnable() {
+			@Override
+			public void run() {
+				while(true) {
+				fileList.setItems(files);
+				}
+			}
+			
+		};
+		threadPool = Executors.newCachedThreadPool();
+		threadPool.submit(thread);
 	}
 
 }

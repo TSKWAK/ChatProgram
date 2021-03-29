@@ -30,7 +30,7 @@
                   <Pane prefHeight="798.0" prefWidth="510.0">
                      <children>
                         <ListView fx:id="fileList" layoutX="6.0" layoutY="12.0" prefHeight="712.0" prefWidth="498.0" />
-                        <Button fx:id="deleteBotton" layoutX="202.0" layoutY="731.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="102.0" text="삭제" />
+                        <Button fx:id="deleteButton" layoutX="202.0" layoutY="731.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="102.0" text="삭제" />
                      </children>
                   </Pane>
                </children></AnchorPane>
