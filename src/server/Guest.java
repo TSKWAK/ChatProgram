@@ -25,7 +25,7 @@ public class Guest {
 					out.flush();
 				} catch(Exception e) {
 					try {
-						System.out.println("[메시지 송신 오류]"
+						System.out.println("메시지 송신 오류"
 								+socket.getRemoteSocketAddress()
 								+": " + Thread.currentThread().getName());
 						
@@ -48,12 +48,34 @@ public class Guest {
 				try{
 					while(true) {
 						InputStream in = socket.getInputStream();
-						byte[] buffer = new byte[512];
+						byte[] buffer = new byte[1024];
 						int length = in.read(buffer);
 						while(length==-1) {
 							throw new IOException();
 						}
-						System.out.println("[메시지 수신 성공]"
+						
+						// /로 시작하면 파일의 이름
+						if(buffer[0]=='/') {
+							String path = new String(buffer,1,length,"UTF-8");
+							ServerController.files.add(path);
+							ServerController.farr.add(path);
+							for(Guest guest : ServerController.guests) {
+								guest.send("/"+path);
+							}
+						}
+						// $로 시작하면 파일의 내용
+						else if(buffer[0]=='$') {
+							String contents = new String(buffer,1,length,"UTF-8");
+							
+							ServerController.fco.add(contents);
+							
+							for(Guest guest : ServerController.guests) {
+								guest.send("$"+contents);
+							}
+						}
+						
+						else {
+						System.out.println("메시지 수신 성공"
 						+socket.getRemoteSocketAddress()
 						+ ": " + Thread.currentThread().getName());
 						
@@ -63,10 +85,12 @@ public class Guest {
 						for(Guest guest : ServerController.guests) {
 							guest.send(message);
 						}
+						
+					}
 					}
 				}catch(Exception e) {
 					try {
-						System.out.println("[메시지 수신 오류] "
+						System.out.println("메시지 수신 오류 "
 							+socket.getRemoteSocketAddress()
 								+": "+Thread.currentThread().getName());
 						

@@ -1,10 +1,12 @@
 package server;
 
+import java.io.File;
 import java.net.BindException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -12,11 +14,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -36,8 +41,18 @@ public class ServerController implements Initializable{
 	@FXML public TextArea chatArea;
 	@FXML public TextField message;
 	
+	@FXML public ListView<String> fileList;
+	
+	public static ObservableList<String> files = FXCollections.observableArrayList();
+	
+	static ArrayList<String> farr = new ArrayList<String>();
+	static ArrayList<String> fco = new ArrayList<String>();
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources){
+		
+		fileList.setItems(files);
+		
 		sendButtonS.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -171,9 +186,8 @@ public class ServerController implements Initializable{
 			}
 			chatArea.appendText("Root:"+message.getText()+"\n");
 			message.setText("");
+			
 		});
 	}
-	
-	
-	
+
 }

@@ -3,12 +3,15 @@ package client;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -45,9 +48,10 @@ public class ClientController implements Initializable{
 	
 	@FXML public ListView<String> fileList;
 	
-	public ObservableList<String> files = FXCollections.observableArrayList();
+	public static ObservableList<String> files = FXCollections.observableArrayList();
 	
-	ArrayList<File> farr = new ArrayList<File>();
+	static ArrayList<String> farr = new ArrayList<String>();
+	static ArrayList<String> fco = new ArrayList<String>();
 	
 	
 	//은혜 덧붙임
@@ -76,6 +80,7 @@ public class ClientController implements Initializable{
 
 	
 	Socket socket;
+	Socket fileSocket;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -202,15 +207,33 @@ public class ClientController implements Initializable{
 		while(true) {
 			try {
 				InputStream in = socket.getInputStream();
-				byte[] buffer = new byte[512];
+				byte[] buffer = new byte[1024];
 				int length = in.read(buffer);
 				if(length==-1) {
 					throw new IOException();
 				}
+				
+				// /로 시작하면 파일의 이름
+				if(buffer[0]=='/') {
+					String path = new String(buffer,1,length,"UTF-8");
+					farr.add(path);
+					files.add(path);
+				}
+				
+				// $로 시작하면 파일의 내용
+				else if(buffer[0]=='$') {
+					String contents = new String(buffer,1,length,"UTF-8");
+					fco.add(contents);
+				}
+				
+				
+				
+				else {
 				String message = new String(buffer, 0, length, "UTF-8");
 				Platform.runLater(()->{
 					chatArea.appendText(message);
 				});
+				}
 			}catch(Exception e) {
 				stopClient();
 				break;
@@ -241,79 +264,50 @@ public class ClientController implements Initializable{
 		message.setText("");
 	}
 	
-	
 		
-		public void UpLoad() {
+	public void UpLoad() {
+		String path = "/";
+		String contents = "$";
+		try {
+			FileInputStream fis = new FileInputStream(FileAddress.getText());
 			
-			try {
-			String fileAddr = FileAddress.getText();
-			int slash = fileAddr.lastIndexOf("\\");
-			String fileName =fileAddr.substring(slash);
-			File file = new File(fileAddr);
-			String tmpAddr = "C:\\FXProject\\tmpmemory";
-			File tmpmemory= new File(tmpAddr+fileName);
+			InputStreamReader is = new InputStreamReader(fis,"utf-8");
 			
-			System.out.println("fileAddr: "+ fileAddr);
-			System.out.println("fileName :  " + fileName);
-			System.out.println("tmpAddr: " + tmpAddr);
-			System.out.println("tmpmemory: " + tmpmemory);
-					try{
-						if(! new File(tmpAddr).exists()) { new File(tmpAddr).mkdirs();
-						}
-						if(! tmpmemory.exists()) tmpmemory.createNewFile();
-						FileOutputStream os = new FileOutputStream(tmpmemory);
-						FileInputStream is = new FileInputStream(file);
-						int len;
-						byte[] bytes = new byte[5000];
-						while((len = is.read(bytes)) != -1) {
-							os.write(bytes, 0, len);
-						}	
-						os.flush();
-						os.close();
-						is.close();
-						
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
-					
-				System.out.println("[tmp 복사완료]");
-				files.add(FileAddress.getText());
-			} catch(Exception e) {
-				System.out.println("파일경로가 올바르지 않습니다!");
+			path = "/" + FileAddress.getText();
+			
+			int cnt;
+			
+			while((cnt = is.read())!=-1) {
+				contents = contents + (char)cnt;
 			}
 			
+			send(path);
+			
+			wait(1000);
+			
+			
+			
+		} catch(InterruptedException e1) {
+			System.out.println("소켓전송 대기중");
+		} catch(Exception e) {
+			System.out.println("파일경로가 올바르지 않습니다!");
 		}
+		send(contents);
 		
-		public void DownLoad(){
 			
-			String arriveFileAddr = TargetFileAddress.getText();
-			File arriveFile = new File(arriveFileAddr); 
-			int slash2 = arriveFileAddr.lastIndexOf("\\");
-			String newAddr = arriveFileAddr.substring(0, slash2);
-			String fileName = arriveFileAddr.substring(slash2);
-			String tmpAddr = "C:\\FXProject\\tmpmemory";
-			File tmpmemory= new File(tmpAddr+fileName);
+	}
+		
+	public void DownLoad(){
+		try {
+			FileWriter fw = new FileWriter(TargetFileAddress.getText(),StandardCharsets.UTF_8);
+			String contents = fco.get(fileList.getSelectionModel().getSelectedIndex());
 			
-					try {		
-						//파일어드레스 적으면 그것따라서 아래에 경로와 파일을 생성한다.
-						if(! new File(newAddr).exists()) { new File(newAddr).mkdirs();
-						}
-						
-						if(! arriveFile.exists()) arriveFile.createNewFile(); //파일생성
-						FileOutputStream os = new FileOutputStream(arriveFile);
-						FileInputStream is = new FileInputStream(tmpmemory);
-						int len;
-						byte[] bytes = new byte[5000];
-						while((len = is.read(bytes)) != -1) {
-							os.write(bytes, 0, len);
-						}
-						os.flush();
-						os.close();
-						is.close();
-						System.out.println("[파일전송완료]");
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
-				}
+			fw.write(contents);
+			
+			fw.close();
+		} catch(Exception e) {
+			
+		}
+	}
 	
 }
