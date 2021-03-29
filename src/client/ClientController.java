@@ -1,6 +1,8 @@
 package client;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 public class ClientController implements Initializable{
 	@FXML public Button sendButtonC;
@@ -92,21 +95,6 @@ public class ClientController implements Initializable{
 	
 		//Upload~Download 은혜
 
-				FileAddress.setOnMouseClicked(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent event) {
-						upLoadClick(event);
-					}
-					
-				});
-				
-				TargetFileAddress.setOnMouseClicked(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent event) {
-						downLoadClick(event);
-					}
-					
-				});
 				
 				Uploadbut.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -215,12 +203,14 @@ public class ClientController implements Initializable{
 	
 	
 	//은혜 덧붙임
+		@FXML
 		public void upLoadClick(MouseEvent event) {		
-			FileAddress.setText(" ");
+			FileAddress.setText("");
 		}
 		
+		@FXML
 		public void downLoadClick(MouseEvent event) {
-			TargetFileAddress.setText(" ");
+			TargetFileAddress.setText("");
 		}
 		
 		public void Upload() {
