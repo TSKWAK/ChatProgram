@@ -309,7 +309,7 @@ public class ClientController implements Initializable{
 			
 			fw.write(contents);
 			
-			send(nickName.getText() + ": "+ TargetFileAddress.getText() + " 다운로드 완료");
+			send(nickName.getText() + ": "+ TargetFileAddress.getText() + " 다운로드 완료 \n");
 			
 			Platform.runLater(()->{
 				TargetFileAddress.setText("");
