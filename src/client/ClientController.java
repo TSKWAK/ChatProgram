@@ -12,11 +12,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -37,6 +40,11 @@ public class ClientController implements Initializable{
 	@FXML public Button Downloadbut;
 	@FXML public TextField FileAddress;
 	@FXML public TextField TargetFileAddress;
+	
+	@FXML public ListView fileList;
+	
+	public ObservableList<String> files = FXCollections.observableArrayList();
+	
 	
 	//은혜 덧붙임
 	@FXML
@@ -67,6 +75,9 @@ public class ClientController implements Initializable{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		fileList.setItems(files);
+		
 		sendButtonC.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -258,7 +269,9 @@ public class ClientController implements Initializable{
 					} catch(Exception e) {
 						e.printStackTrace();
 					}
+					
 				System.out.println("[tmp 복사완료]");
+				files.add(FileAddress.getText());
 			} catch(Exception e) {
 				System.out.println("파일경로가 올바르지 않습니다!");
 			}
