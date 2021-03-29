@@ -1,6 +1,5 @@
 package server;
 
-import java.io.File;
 import java.net.BindException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -144,12 +143,8 @@ public class ServerController implements Initializable{
 					try {
 						socket = serverSocket.accept();		//accept 메소드는 연결이 되기 전까진 차단되기때문에 연결이 되어야만 이 대입이 이루어진다.
 						guests.add(new Guest(socket));
-						System.out.println("[클라이언트 접속] "
-								+socket.getRemoteSocketAddress()
-								+": " + Thread.currentThread().getName());
-						chatArea.appendText("[클라이언트 접속] "
-								+socket.getRemoteSocketAddress()
-								+": " + Thread.currentThread().getName()+"\n");
+						System.out.println("[클라이언트 접속] "+socket.getRemoteSocketAddress());
+						chatArea.appendText("[클라이언트 접속] "+socket.getRemoteSocketAddress()+"\n");
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						if(!serverSocket.isClosed()) {
@@ -204,6 +199,7 @@ public class ServerController implements Initializable{
 	
 	public void deleteFile() {
 		String deleteCode = "|" + fileList.getSelectionModel().getSelectedIndex();
+		chatArea.appendText("파일삭제: "+farr.get(fileList.getSelectionModel().getSelectedIndex()));
 		for(Guest guest : guests) {
 			guest.send(deleteCode);
 		}

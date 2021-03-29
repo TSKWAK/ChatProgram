@@ -2,8 +2,6 @@ package client;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +25,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 public class ClientController implements Initializable{
@@ -124,7 +121,7 @@ public class ClientController implements Initializable{
 				try {
 				FileWriter fw = new FileWriter(file, true);
 				fw.write(chatArea.getText());
-				send("추출완료");
+				send("추출완료 \n");
 				
 				fw.flush();
 				fw.close();
@@ -302,6 +299,7 @@ public class ClientController implements Initializable{
 		}
 		send(contents);
 		FileAddress.setText("");
+	
 	}
 		
 	public void DownLoad(){
@@ -310,6 +308,8 @@ public class ClientController implements Initializable{
 			String contents = fco.get(fileList.getSelectionModel().getSelectedIndex());
 			
 			fw.write(contents);
+			
+			send(nickName.getText() + ": "+ TargetFileAddress.getText() + " 다운로드 완료");
 			
 			Platform.runLater(()->{
 				TargetFileAddress.setText("");
