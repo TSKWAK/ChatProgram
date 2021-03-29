@@ -28,6 +28,13 @@ public class ClientController implements Initializable{
 	@FXML public TextField message;
 	@FXML public Button exportButton;
 	
+	//*은혜
+	@FXML public Button Uploadbut;
+	@FXML public Button Downloadbut;
+	@FXML public TextField FileAddress;
+	@FXML public TextField TargetFileAddress;
+
+	
 	Socket socket;
 	
 	@Override
@@ -82,6 +89,40 @@ public class ClientController implements Initializable{
 			}
 			
 		});
+	
+		//Upload~Download 은혜
+
+				FileAddress.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						upLoadClick(event);
+					}
+					
+				});
+				
+				TargetFileAddress.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						downLoadClick(event);
+					}
+					
+				});
+				
+				Uploadbut.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						UploadbutAction(event);
+					}
+					
+				});
+				
+				Downloadbut.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						DownloadbutAction(event);				
+					}
+					
+				});
 		
 	}
 	
@@ -171,5 +212,91 @@ public class ClientController implements Initializable{
 		send(nickName.getText() + ": " + message.getText()+ "\n");
 		message.setText("");
 	}
+	
+	
+	//은혜 덧붙임
+		public void upLoadClick(MouseEvent event) {		
+			FileAddress.setText(" ");
+		}
+		
+		public void downLoadClick(MouseEvent event) {
+			TargetFileAddress.setText(" ");
+		}
+		
+		public void Upload() {
+
+			String fileAddr = FileAddress.getText();
+			int slash = fileAddr.lastIndexOf("\\");
+			String fileName =fileAddr.substring(slash); 
+			File file = new File(fileAddr);
+			String tmpAddr = "C:\\FXProject\\tmpmemory";
+			File tmpmemory= new File(tmpAddr+fileName);
+			
+			System.out.println("fileAddr: "+ fileAddr);
+			System.out.println("fileName :  " + fileName);
+			System.out.println("tmpAddr: " + tmpAddr);
+			System.out.println("tmpmemory: " + tmpmemory);
+					try{
+						if(! new File(tmpAddr).exists()) { new File(tmpAddr).mkdirs();
+						}
+						if(! tmpmemory.exists()) tmpmemory.createNewFile();
+						FileOutputStream os = new FileOutputStream(tmpmemory);
+						FileInputStream is = new FileInputStream(file);
+						int len;
+						byte[] bytes = new byte[5000];
+						while((len = is.read(bytes)) != -1) {
+							os.write(bytes, 0, len);
+						}	
+						os.flush();
+						os.close();
+						is.close();
+						
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				System.out.println("[tmp 복사완료]");
+			
+		}
+		
+		public void Download(){		
+		
+			String arriveFileAddr = TargetFileAddress.getText();
+			File arriveFile = new File(arriveFileAddr); 
+			int slash2 = arriveFileAddr.lastIndexOf("\\"); 
+			String newAddr = arriveFileAddr.substring(0, slash2);
+			String fileName = arriveFileAddr.substring(slash2);
+			String tmpAddr = "C:\\FXProject\\tmpmemory";
+			File tmpmemory= new File(tmpAddr+fileName);
+			
+					try {		
+						//파일어드레스 적으면 그것따라서 아래에 경로와 파일을 생성한다.
+						if(! new File(newAddr).exists()) { new File(newAddr).mkdirs();
+						}
+						
+						if(! arriveFile.exists()) arriveFile.createNewFile(); //파일생성
+						FileOutputStream os = new FileOutputStream(arriveFile);
+						FileInputStream is = new FileInputStream(tmpmemory);
+						int len;
+						byte[] bytes = new byte[5000];
+						while((len = is.read(bytes)) != -1) {
+							os.write(bytes, 0, len);
+						}
+						os.flush();
+						os.close();
+						is.close();
+						System.out.println("[파일전송완료]");
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+		
+		public void UploadbutAction(ActionEvent event) {
+			Upload();
+		}
+		
+		public void DownloadbutAction(ActionEvent event) {
+			Download();
+		}
+	
 	
 }

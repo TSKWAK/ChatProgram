@@ -25,8 +25,17 @@
                   <Label layoutX="18.0" layoutY="53.0" text="IP주소" />
                   <Button fx:id="exportButton" layoutX="240.0" layoutY="50.0" mnemonicParsing="false" text="추출" />
                </children>
+            </AnchorPane> <!--은혜수정부분 -->
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="808.0" prefWidth="468.0">
+               <children>
+                  <TextArea layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="281.0" />
+                  <TextField fx:id="FileAddress" layoutX="24.0" layoutY="20.0" prefHeight="23.0" prefWidth="256.0" text="업로드할 파일 경로를 입력하세요." />
+                  <Button fx:id="Uploadbut" layoutX="303.0" layoutY="14.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="84.0" text="Upload" />
+                  <TextArea layoutX="14.0" layoutY="472.0" prefHeight="36.0" prefWidth="281.0" />
+                  <TextField fx:id="TargetFileAddress" layoutX="31.0" layoutY="479.0" prefHeight="23.0" prefWidth="256.0" text="다운로드할 파일 경로를 입력하세요." />
+                  <Button fx:id="Downloadbut" layoutX="303.0" layoutY="471.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="84.0" text="Download" />
+               </children>
             </AnchorPane>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
          </items>
       </SplitPane>
    </children>
