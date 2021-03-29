@@ -304,9 +304,13 @@ public class ClientController implements Initializable{
 			
 			fw.write(contents);
 			
+			Platform.runLater(()->{
+				TargetFileAddress.setText("");
+			});
+			
 			fw.close();
 		} catch(Exception e) {
-			
+			System.out.println("경로가 올바르지 않습니다.");
 		}
 	}
 	
