@@ -53,7 +53,7 @@ public class ServerController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources){
 		
-		rePlace();
+		fileList.setItems(files);
 		
 		sendButtonS.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -210,20 +210,6 @@ public class ServerController implements Initializable{
 		files.remove(fileList.getSelectionModel().getSelectedIndex());
 		farr.remove(fileList.getSelectionModel().getSelectedIndex());
 		fco.remove(fileList.getSelectionModel().getSelectedIndex());
-	}
-	
-	public void rePlace() {
-		Runnable thread = new Runnable() {
-			@Override
-			public void run() {
-				while(true) {
-				fileList.setItems(files);
-				}
-			}
-			
-		};
-		threadPool = Executors.newCachedThreadPool();
-		threadPool.submit(thread);
 	}
 
 }

@@ -230,9 +230,9 @@ public class ClientController implements Initializable{
 				}
 				else if(buffer[0]=='|') {
 					Platform.runLater(()->{
-						files.remove(buffer[1]);
-						farr.remove(buffer[1]);
-						fco.remove(buffer[1]);
+						files.remove(buffer[1]-48);
+						farr.remove(buffer[1]-48);
+						fco.remove(buffer[1]-48);
 						fileList.setItems(files);
 					});
 				}
